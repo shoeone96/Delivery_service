@@ -16,3 +16,7 @@ spring:
       platform: mysql
 jwt:
   secret-key: {JWT_KEY}
+
+springdoc:
+  swagger-ui:
+    path: "/swagger-ui.html"
