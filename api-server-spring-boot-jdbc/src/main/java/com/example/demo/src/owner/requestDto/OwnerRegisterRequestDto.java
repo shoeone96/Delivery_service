@@ -1,4 +1,4 @@
-package com.example.demo.src.owner;
+package com.example.demo.src.owner.requestDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

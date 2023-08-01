@@ -1,5 +1,6 @@
-package com.example.demo.src.owner;
+package com.example.demo.src.owner.responseDto;
 
+import com.example.demo.src.owner.Owner;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
