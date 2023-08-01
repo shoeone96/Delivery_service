@@ -31,6 +31,9 @@ public enum BaseResponseStatus {
     POST_USERS_INVALID_EMAIL(false, 2016, "이메일 형식을 확인해주세요.", HttpStatus.BAD_REQUEST),
     POST_USERS_EXISTS_EMAIL(false,2017,"중복된 이메일입니다.", HttpStatus.BAD_REQUEST),
     OWNER_EXIST_USERNAME(false, 2018, "이미 존재하는 아이디입니다.", HttpStatus.BAD_REQUEST),
+    OWNER_NOT_EXIST(false, 2019, "존재하지 않는 아이디입니다.", HttpStatus.BAD_REQUEST),
+    INVALID_PASSWORD(false,2020, "비밀번호를 확인해주세요", HttpStatus.BAD_REQUEST),
+
 
 
 
