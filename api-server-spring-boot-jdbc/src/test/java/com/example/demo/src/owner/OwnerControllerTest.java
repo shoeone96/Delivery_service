@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,13 +42,10 @@ public class OwnerControllerTest {
     @Autowired
     private OwnerRepository ownerRepository;
 
-    @AfterEach
-    public void teardown() {
-        ownerRepository.deleteAll();
-    }
     @Test
     @DisplayName("사장등록 컨트롤러 테스트")
-    @WithMockUser
+    @Transactional
+    @Rollback
     void ownerRegisterTest() throws Exception {
 
         String username = "username";
@@ -68,6 +66,7 @@ public class OwnerControllerTest {
     @Test
     @DisplayName("동일 아이디 사장 등록 테스트")
     @Transactional
+    @Rollback
     void ownerExistNameRegisterTest() throws Exception {
 
         String username = "username";
@@ -92,6 +91,7 @@ public class OwnerControllerTest {
     @Test
     @DisplayName("정상 사장 로그인 테스트")
     @Transactional
+    @Rollback
     void ownerLoginTest() throws Exception {
 
         String username = "username";
@@ -111,6 +111,7 @@ public class OwnerControllerTest {
     @Test
     @DisplayName("사장 로그인 api 실패 테스트 - 유저 이름 잘못 기입")
     @Transactional
+    @Rollback
     void ownerLoginFailWrongUsernameTest() throws Exception {
 
         String username = "username";
@@ -118,7 +119,7 @@ public class OwnerControllerTest {
         String name = "name";
 
         ownerService.registerOwner(new OwnerRegisterRequestDto(username, password, name));
-        OwnerLoginRequestDto requestDto = new OwnerLoginRequestDto(username+1, password);
+        OwnerLoginRequestDto requestDto = new OwnerLoginRequestDto(username + 1, password);
 
         mockMvc.perform(post("/api/v1/owners/login")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -126,13 +127,15 @@ public class OwnerControllerTest {
                 ).andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof BaseException))
-                .andExpect(result -> assertEquals("유저가 존재하지 않습니다.", result.getResolvedException().getMessage()));;
+                .andExpect(result -> assertEquals("유저가 존재하지 않습니다.", result.getResolvedException().getMessage()));
+        ;
     }
 
 
     @Test
     @DisplayName("사장 로그인 api 실패 테스트 - 비밀번호 잘못 기입")
     @Transactional
+    @Rollback
     void ownerLoginFailWrongPasswordTest() throws Exception {
 
         String username = "username";
@@ -140,7 +143,7 @@ public class OwnerControllerTest {
         String name = "name";
 
         ownerService.registerOwner(new OwnerRegisterRequestDto(username, password, name));
-        OwnerLoginRequestDto requestDto = new OwnerLoginRequestDto(username, password +1);
+        OwnerLoginRequestDto requestDto = new OwnerLoginRequestDto(username, password + 1);
 
         mockMvc.perform(post("/api/v1/owners/login")
                         .contentType(MediaType.APPLICATION_JSON)
