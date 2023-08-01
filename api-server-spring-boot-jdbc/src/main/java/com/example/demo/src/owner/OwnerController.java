@@ -13,8 +13,7 @@ public class OwnerController {
     private final OwnerService ownerService;
 
     @PostMapping("/api/v1/owners")
-    public BaseResponse<Void> ownerJoin(@RequestBody OwnerRegisterRequestDto requestDto){
-        ownerService.registerOwner(requestDto);
-        return BaseResponse.success();
+    public BaseResponse<OwnerJoinResponseDto> ownerJoin(@RequestBody OwnerRegisterRequestDto requestDto){
+        return BaseResponse.success(ownerService.registerOwner(requestDto));
     }
 }
