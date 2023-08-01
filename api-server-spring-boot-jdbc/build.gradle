@@ -26,8 +26,9 @@ dependencies {
     implementation 'org.jetbrains:annotations:23.0.0'
 
 
-    // Spring Boot Starter
+    // Spring Boot Starter, test dependency 추가
     testImplementation('org.springframework.boot:spring-boot-starter-test')
+    testImplementation 'org.springframework.security:spring-security-test'
 
     // Lombok
     implementation('org.projectlombok:lombok')
