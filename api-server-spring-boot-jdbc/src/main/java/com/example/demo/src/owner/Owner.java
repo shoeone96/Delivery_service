@@ -1,5 +1,6 @@
 package com.example.demo.src.owner;
 
+import com.example.demo.src.owner.requestDto.OwnerRegisterRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
