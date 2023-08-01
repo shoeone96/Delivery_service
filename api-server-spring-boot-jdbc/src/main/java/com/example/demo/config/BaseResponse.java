@@ -34,13 +34,15 @@ public class BaseResponse<T> {
     }
 
     // 요청에 실패한 경우
+
+
     public BaseResponse(BaseResponseStatus status) {
         this.isSuccess = status.isSuccess();
         this.message = status.getMessage();
         this.code = status.getCode();
     }
 
-    public static BaseResponse<HttpStatus> error(BaseResponseStatus status) {
+    public static <T>BaseResponse<T> error(BaseResponseStatus status) {
         return new BaseResponse<>(status);
     }
     public static <T> BaseResponse<T> success(T result){
