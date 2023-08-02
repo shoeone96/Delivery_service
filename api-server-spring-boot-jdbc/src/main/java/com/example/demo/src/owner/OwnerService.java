@@ -5,16 +5,19 @@ import com.example.demo.config.BaseResponseStatus;
 import com.example.demo.src.owner.requestDto.OwnerLoginRequestDto;
 import com.example.demo.src.owner.requestDto.OwnerRegisterRequestDto;
 import com.example.demo.src.owner.responseDto.OwnerJoinResponseDto;
+import com.example.demo.utils.JwtService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Transactional
 public class OwnerService {
 
     private final OwnerRepository ownerRepository;
+    private final JwtService jwtService;
     public OwnerJoinResponseDto registerOwner(OwnerRegisterRequestDto requestDto) {
         ownerRepository.findByUsername(requestDto.getUsername())
                 .ifPresent(name -> {
@@ -41,6 +44,6 @@ public class OwnerService {
 
         // 로그인 성공
         // TODO: 추후 JWT 도입 예정
-        return "로그인에 성공";
+        return jwtService.createOwnerJwt(owner);
     }
 }
