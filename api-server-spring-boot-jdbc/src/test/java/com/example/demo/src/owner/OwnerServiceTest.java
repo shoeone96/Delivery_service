@@ -3,9 +3,10 @@ package com.example.demo.src.owner;
 import com.example.demo.config.BaseException;
 import com.example.demo.src.owner.requestDto.OwnerLoginRequestDto;
 import com.example.demo.src.owner.requestDto.OwnerRegisterRequestDto;
-import org.junit.jupiter.api.AfterEach;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
@@ -13,8 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.*;
 
-@Transactional
 @SpringBootTest
+@Slf4j
 class OwnerServiceTest {
 
     @Autowired
@@ -67,19 +68,23 @@ class OwnerServiceTest {
 
     @DisplayName("사장 로그인 테스트")
     @Test
-    @Transactional
     @Rollback
+    @Transactional
     public void OwnerLoginTest() throws Exception {
         // given
         String username = "username";
         String password = "password";
         String name = "name";
         OwnerRegisterRequestDto requestDto = new OwnerRegisterRequestDto(username, password, name);
-
+        log.info("before join password={}", requestDto.getPassword());
         ownerService.registerOwner(requestDto);
+        log.info("after join password={}", requestDto.getPassword());
 
         // when
-        String result = ownerService.login(new OwnerLoginRequestDto(username, password));
+        OwnerLoginRequestDto dto = new OwnerLoginRequestDto(username, password);
+        log.info("before login password={}", requestDto.getPassword());
+        String result = ownerService.login(dto);
+        log.info("after login password={}", dto.getPassword());
 
         // then
         assertThat(result).isEqualTo("로그인에 성공");
