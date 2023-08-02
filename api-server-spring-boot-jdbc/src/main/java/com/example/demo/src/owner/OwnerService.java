@@ -21,6 +21,8 @@ public class OwnerService {
                     throw new BaseException(BaseResponseStatus.OWNER_EXIST_USERNAME, "이미 존재하는 아이디입니다.");
                 });
         // TODO: 비밀번호 해싱 도입 예정
+        requestDto.hashing();
+
         Owner owner = Owner.of(requestDto);
         ownerRepository.save(owner);
         return OwnerJoinResponseDto.of(owner);
@@ -33,6 +35,8 @@ public class OwnerService {
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.OWNER_NOT_EXIST, "유저가 존재하지 않습니다."));
         // password 대조
         // TODO: 비밀번호 해싱 도입 예정
+        requestDto.hashing();
+
         if(!owner.getPassword().equals(requestDto.getPassword())) throw new BaseException(BaseResponseStatus.INVALID_PASSWORD, "비밀번호가 유효하지 않습니다.");
 
         // 로그인 성공
