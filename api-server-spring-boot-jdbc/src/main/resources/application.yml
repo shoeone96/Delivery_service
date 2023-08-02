@@ -26,7 +26,7 @@ spring:
 
 
 jwt:
-  secret-key: {JWT_KEY}
+  key: {JWT_KEY}
 
 springdoc:
   swagger-ui:
