@@ -50,7 +50,7 @@ public class UserService {
         try{
             int userIdx = userDao.createUser(postUserReq);
             //jwt 발급.
-            String jwt = jwtService.createJwt(userIdx);
+            String jwt = jwtService.createUserJwt(userIdx);
             return new PostUserRes(jwt,userIdx);
         } catch (Exception exception) {
             logger.error("App - createUser Service Error", exception);
